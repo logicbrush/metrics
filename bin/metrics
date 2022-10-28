@@ -1,0 +1,5 @@
+#!/usr/bin/env php
+<?php
+
+$annotator = require __DIR__.'/../src/bootstrap.php';
+$annotator->run();

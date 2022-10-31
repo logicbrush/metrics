@@ -15,6 +15,17 @@ namespace Logicbrush\Metrics\Annotator;
  */
 class MetricsAnnotator implements Annotator
 {
+    private $clover, $file;
+
+    /**
+     *
+     */
+    public function __construct( string $clover, string $file ) {
+        $this->path_to_clover = $clover;
+        $this->path_to_file = $file;
+    }
+
+
     /**
      *
      */
@@ -22,11 +33,11 @@ class MetricsAnnotator implements Annotator
         defined( 'STDIN' ) or die( 'command line only.' );
 
 
-        $file = $argv[1];
+        $file = $this->path_to_file;
         $code = file_get_contents( $file );
         $tokens = \PhpToken::tokenize( $code, TOKEN_PARSE );
 
-        $clover = new SimpleXMLElement( file_get_contents( __DIR__ . "/../build/coverage/clover.xml" ) );
+        $clover = new SimpleXMLElement( file_get_contents( __DIR__ . $this->path_to_clover ) );
 
         $function = null;
         $class = null;
@@ -100,7 +111,7 @@ class MetricsAnnotator implements Annotator
      * @param array            $tokens  (reference)
      * @return unknown
      */
-    protected function annotate( array &$tokens, int $key, SimpleXMLElement $metrics ) {
+    public function annotate( array &$tokens, int $key, SimpleXMLElement $metrics ) {
         while ( $key >= 1 && ( $token = $tokens[--$key] ) ) {
             if ( is_array( $token ) ) {
                 switch ( $token[0] ) {
@@ -150,7 +161,7 @@ class MetricsAnnotator implements Annotator
      * @param string           $namespace
      * @return unknown
      */
-    protected function metrics( SimpleXMLElement $clover, ?string $function, ?string $class, ?string $namespace ): ?SimpleXMLElement {
+    public function metrics( SimpleXMLElement $clover, ?string $function, ?string $class, ?string $namespace ): ?SimpleXMLElement {
 
         if ( $function && $class && $namespace ) {
             $path = "//class[@name='{$namespace}\\{$class}']/following-sibling::line[@type='method'][@name='{$function}']";
@@ -171,7 +182,7 @@ class MetricsAnnotator implements Annotator
      * @param int     $key   (optional, reference)
      * @return unknown
      */
-    protected function pop_token( array &$array, &$token, int &$depth, int &$key = null ) : bool {
+    public function pop_token( array &$array, &$token, int &$depth, int &$key = null ) : bool {
 
         while ( ( $key = key( $array ) ) !== null ) {
 

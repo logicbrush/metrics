@@ -15,9 +15,9 @@ class MetricsBootstrap
     /**
      * @return unknown
      */
-    public static function createAnnotator()
+    public static function createAnnotator( string $clover, string $file )
     {
-        $annotator = new MetricsAnnotator();
+        $annotator = new MetricsAnnotator( $clover, $file );
 
         return $annotator;
     }

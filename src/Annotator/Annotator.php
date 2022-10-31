@@ -8,19 +8,20 @@ namespace Logicbrush\Metrics\Annotator;
  */
 interface Annotator
 {
+    public function __construct(  string $clover, string $file );
     /**
      *
      */
-    protected function annotate();
+    public function annotate( array &$tokens, int $key, SimpleXMLElement $metrics );
 
     /**
      *
      */
-    protected function metrics() : ?SimpleXMLElement;
+    public function metrics( SimpleXMLElement $clover, ?string $function, ?string $class, ?string $namespace ) : ?SimpleXMLElement;
 
     /**
      *
      */
-    protected function pop_token() : bool;
+    public function pop_token( array &$array, &$token, int &$depth, int &$key = null ) : bool;
 
 }

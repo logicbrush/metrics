@@ -19,7 +19,7 @@
         }
     },
     "bin": [
-        "bin/metrics"
+        "bin/annotate"
     ],
     "prefer-stable": true
 }

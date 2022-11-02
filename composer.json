@@ -16,7 +16,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Logicbrush\\Metrics\\": "src"
+            "Logicbrush\\Metrics\\": "src/Metrics"
         }
     },
     "bin": [

@@ -1,8 +1,6 @@
 <?php
 
-namespace Logicbrush\Metrics\Annotator;
-
-use SimpleXMLElement;
+namespace Logicbrush\Metrics;
 
 /**
  * Annotator interface

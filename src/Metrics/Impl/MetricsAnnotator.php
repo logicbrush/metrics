@@ -1,7 +1,8 @@
 <?php
 
-namespace Logicbrush\Metrics\Annotator;
+namespace Logicbrush\Metrics\Impl;
 
+use Logicbrush\Metrics\Annotator;
 use SimpleXMLElement;
 
 /**
@@ -15,7 +16,7 @@ use SimpleXMLElement;
  * @package default
  *
  */
-class MetricsAnnotator implements Annotator
+class AnnotatorImpl implements Annotator
 {
     private $path_to_clover, $path_to_file;
 

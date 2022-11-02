@@ -1,6 +1,6 @@
 <?php
 
-namespace Logicbrush;
+namespace Logicbrush\Metrics;
 
 use Doctrine\Common\Annotations\Annotation;
 use Doctrine\Common\Annotations\Annotation\Target;

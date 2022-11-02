@@ -120,7 +120,7 @@ class MetricsAnnotator implements Annotator
                 switch ( $token[0] ) {
                 case T_DOC_COMMENT:
                     $uncovered = $metrics['count'] > 0 ? "" : ", uncovered = true";
-                    $tag = "@Logicbrush\\Metrics( crap = {$metrics['crap']}{$uncovered} )";
+                    $tag = "@Metrics( crap = {$metrics['crap']}{$uncovered} )";
                     $first = true;
                     if ( ! ( ( $tokens[$key][1] = preg_replace_callback(
                                     '#^((\s*\*)\s*)@(?:Logicbrush\\\\)?Metrics(.*)\s*$#m',

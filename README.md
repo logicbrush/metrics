@@ -25,8 +25,8 @@ This will annotate your code with a `@Metrics` annotation, e.g:
 
 ```php
 /**
- * You must have a docblock comment on your method for this to work.  We won't 
- * add it for you.
+ * You must have an existing docblock comment on your method for this to work.  
+ * We won't add it for you.
  * 
  * @Metrics( crap = 10.2, uncovered = true )
  */

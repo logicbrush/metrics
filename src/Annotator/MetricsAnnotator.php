@@ -2,6 +2,8 @@
 
 namespace Logicbrush\Metrics\Annotator;
 
+use SimpleXMLElement;
+
 /**
  * Metrics implementation of the Annotator interfce
  *
@@ -15,7 +17,7 @@ namespace Logicbrush\Metrics\Annotator;
  */
 class MetricsAnnotator implements Annotator
 {
-    private $clover, $file;
+    private $path_to_clover, $path_to_file;
 
     /**
      *
@@ -35,9 +37,10 @@ class MetricsAnnotator implements Annotator
 
         $file = $this->path_to_file;
         $code = file_get_contents( $file );
-        $tokens = \PhpToken::tokenize( $code, TOKEN_PARSE );
+        $tokens = token_get_all( $code, TOKEN_PARSE );
+        $token = [];
 
-        $clover = new SimpleXMLElement( file_get_contents( __DIR__ . $this->path_to_clover ) );
+        $clover = new SimpleXMLElement( file_get_contents( $this->path_to_clover ) );
 
         $function = null;
         $class = null;
@@ -45,13 +48,13 @@ class MetricsAnnotator implements Annotator
 
         $depth = 0;
 
-        while ( pop_token( $tokens, $token, $depth, $key ) ) {
+        while ( $this->pop_token( $tokens, $token, $depth, $key ) ) {
             handle_token:
             switch ( $token[0] ) {
             case T_NAMESPACE:
                 if ( $depth == 0 ) {
                     $namespace = "";
-                    while ( pop_token( $tokens, $token, $depth ) ) {
+                    while ( $this->pop_token( $tokens, $token, $depth ) ) {
                         switch ( $token[0] ) {
                         case T_STRING:
                         case T_NS_SEPARATOR:
@@ -68,7 +71,7 @@ class MetricsAnnotator implements Annotator
             case T_CLASS:
                 if ( $depth == 0 ) {
                     $class = null;
-                    while ( pop_token( $tokens, $token, $depth ) ) {
+                    while ( $this->pop_token( $tokens, $token, $depth ) ) {
                         switch ( $token[0] ) {
                         case T_STRING:
                             $class .= $token[1];
@@ -84,7 +87,7 @@ class MetricsAnnotator implements Annotator
             case T_FUNCTION:
                 if ( $depth == 1 ) {
                     $function = null;
-                    while ( pop_token( $tokens, $token, $depth ) ) {
+                    while ( $this->pop_token( $tokens, $token, $depth ) ) {
                         switch ( $token[0] ) {
                         case T_STRING:
                             $function .= $token[1];
@@ -92,8 +95,8 @@ class MetricsAnnotator implements Annotator
                         case T_WHITESPACE:
                             break;
                         default:
-                            if ( ( $metrics = metrics( $clover, $function, $class, $namespace ) ) !== null ) {
-                                annotate( $tokens, $key, $metrics );
+                            if ( ( $metrics = $this->metrics( $clover, $function, $class, $namespace ) ) !== null ) {
+                                $this->annotate( $tokens, $key, $metrics );
                             }
                             goto handle_token;
                         }
@@ -111,7 +114,7 @@ class MetricsAnnotator implements Annotator
      * @param array            $tokens  (reference)
      * @return unknown
      */
-    public function annotate( array &$tokens, int $key, SimpleXMLElement $metrics ) {
+    protected function annotate( array &$tokens, int $key, SimpleXMLElement $metrics ) {
         while ( $key >= 1 && ( $token = $tokens[--$key] ) ) {
             if ( is_array( $token ) ) {
                 switch ( $token[0] ) {
@@ -161,7 +164,7 @@ class MetricsAnnotator implements Annotator
      * @param string           $namespace
      * @return unknown
      */
-    public function metrics( SimpleXMLElement $clover, ?string $function, ?string $class, ?string $namespace ): ?SimpleXMLElement {
+    protected function metrics( SimpleXMLElement $clover, ?string $function, ?string $class, ?string $namespace ): ?SimpleXMLElement {
 
         if ( $function && $class && $namespace ) {
             $path = "//class[@name='{$namespace}\\{$class}']/following-sibling::line[@type='method'][@name='{$function}']";
@@ -182,12 +185,14 @@ class MetricsAnnotator implements Annotator
      * @param int     $key   (optional, reference)
      * @return unknown
      */
-    public function pop_token( array &$array, &$token, int &$depth, int &$key = null ) : bool {
+    protected function pop_token( array &$array,  &$token, int &$depth, int &$key = null ) : bool {
 
         while ( ( $key = key( $array ) ) !== null ) {
 
             $token = current( $array );
             next( $array );
+
+            // var_dump($token);
 
             if ( is_array( $token ) ) {
                 return true;

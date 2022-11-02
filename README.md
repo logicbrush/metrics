@@ -1,6 +1,6 @@
 # Metrics
 
-A package of utilities for dealing with coverage methods.
+A package of utilities for dealing with coverage metrics.
 
 ## Installation
 

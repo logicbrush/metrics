@@ -20,3 +20,17 @@ to keep your metrics in front of you as you develop.
 ```shell
 php ./vendor/bin/metrics annotate «path to coverage.xml» «path to source file»
 ```
+
+This will annotate your code with a `@Metrics` annotation, e.g:
+
+```php
+/**
+ * You must have a docblock comment on your method for this to work.  We won't 
+ * add it for you.
+ * 
+ * @Metrics( crap = 10.2, uncovered = true )
+ */
+ public function someMethod() : void {
+    ...
+ }
+ ```

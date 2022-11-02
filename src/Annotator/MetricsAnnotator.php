@@ -8,7 +8,7 @@ use SimpleXMLElement;
  * Metrics implementation of the Annotator interfce
  *
  * This class will examine the clover metrics for the project and will update
- * the method Docblocks in the provided source file with `@Metric` annotations.
+ * the method Docblocks in the provided source file with `@Metrics` annotations.
  *
  * @noRector
  *
@@ -120,10 +120,10 @@ class MetricsAnnotator implements Annotator
                 switch ( $token[0] ) {
                 case T_DOC_COMMENT:
                     $uncovered = $metrics['count'] > 0 ? "" : ", uncovered = true";
-                    $tag = "@Metrics( crap = {$metrics['crap']}{$uncovered} )";
+                    $tag = "@Logicbrush\\Metrics( crap = {$metrics['crap']}{$uncovered} )";
                     $first = true;
                     if ( ! ( ( $tokens[$key][1] = preg_replace_callback(
-                                    '#^((\s*\*)\s*)@Metrics(.*)\s*$#m',
+                                    '#^((\s*\*)\s*)@(?:Logicbrush\\\\)?Metrics(.*)\s*$#m',
                                     function( $array ) use ( &$first, $tag ) {
                                         if ( $first ) {
                                             $first = false;

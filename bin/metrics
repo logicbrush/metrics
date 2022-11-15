@@ -1,0 +1,7 @@
+#!/usr/bin/env php
+<?php
+
+ini_set('display_errors', 1);
+
+$annotator = require __DIR__.'/../src/bootstrap.php';
+$annotator->run();

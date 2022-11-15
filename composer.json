@@ -3,7 +3,7 @@
     "description": "Examines the clover metrics for the project and will update method Docblocks in the provided source file with `@Metric` annotations.",
     "keywords": ["metrics","annotations","clover"],
     "homepage": "https://github.com/logicbrush/metrics",
-    "license": "Apache License 2.0",
+    "license": "Apache-2.0",
     "authors": [
         {
             "name": "John Learn",
@@ -11,7 +11,7 @@
         }
     ],
     "require": {
-        "php": ">=8.0.0",
+        "php": "^8.0",
         "doctrine/annotations": "^1.13"
     },
     "autoload": {

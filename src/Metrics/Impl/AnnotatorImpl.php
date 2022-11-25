@@ -167,8 +167,13 @@ class AnnotatorImpl implements Annotator
      */
     protected function metrics( SimpleXMLElement $clover, ?string $function, ?string $class, ?string $namespace ): ?SimpleXMLElement {
 
-        if ( $function && $class && $namespace ) {
-            $path = "//class[@name='{$namespace}\\{$class}']/following-sibling::line[@type='method'][@name='{$function}']";
+        if ( $function && $class) {
+            if ($namespace) {
+                $path = "//class[@name='{$namespace}\\{$class}']/following-sibling::line[@type='method'][@name='{$function}']";
+            } else {
+                $path = "//class[@name='{$class}'][@namespace='global']/following-sibling::line[@type='method'][@name='{$function}']";
+
+            }
             if ( $node = @$clover->xpath( $path )[0] ) {
                 return $node->attributes();
             }

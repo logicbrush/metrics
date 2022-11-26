@@ -59,6 +59,7 @@ class AnnotatorImpl implements Annotator
                         switch ( $token[0] ) {
                         case T_STRING:
                         case T_NS_SEPARATOR:
+                        case T_NAME_QUALIFIED:
                             $namespace .= $token[1];
                             break;
                         case T_WHITESPACE:

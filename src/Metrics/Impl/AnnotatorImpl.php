@@ -6,7 +6,7 @@ use Logicbrush\Metrics\Annotator;
 use SimpleXMLElement;
 
 // These constants are only defined in PHP 8.0+.
-defined(T_NAME_QUALIFIED) or define(T_NAME_QUALIFIED, -1);
+defined('T_NAME_QUALIFIED') or define('T_NAME_QUALIFIED', -1);
 
 /**
  * Metrics implementation of the Annotator interfce

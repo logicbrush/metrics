@@ -63,7 +63,9 @@ class AnnotatorImpl implements Annotator
                         case T_STRING:
                         case T_NS_SEPARATOR:
                         case T_NAME_QUALIFIED:
-                            $namespace .= $token[1];
+                            if ($token[1] != ';') {
+                                $namespace .= $token[1];
+                            }
                             break;
                         case T_WHITESPACE:
                             break;

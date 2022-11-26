@@ -5,6 +5,9 @@ namespace Logicbrush\Metrics\Impl;
 use Logicbrush\Metrics\Annotator;
 use SimpleXMLElement;
 
+// These constants are only defined in PHP 8.0+.
+defined('T_NAME_QUALIFIED') or define('T_NAME_QUALIFIED', -1);
+
 /**
  * Metrics implementation of the Annotator interfce
  *
@@ -59,7 +62,10 @@ class AnnotatorImpl implements Annotator
                         switch ( $token[0] ) {
                         case T_STRING:
                         case T_NS_SEPARATOR:
-                            $namespace .= $token[1];
+                        case T_NAME_QUALIFIED:
+                            if ($token[1] != ';') {
+                                $namespace .= $token[1];
+                            }
                             break;
                         case T_WHITESPACE:
                             break;

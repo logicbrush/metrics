@@ -16,6 +16,8 @@ class Bootstrap
 {
     /**
      * @return unknown
+     *
+     * @Metrics( crap = 2, uncovered = true )
      */
     public static function createAnnotator( string $clover, string $file )
     {

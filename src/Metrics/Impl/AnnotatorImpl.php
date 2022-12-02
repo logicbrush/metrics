@@ -207,6 +207,12 @@ class AnnotatorImpl implements Annotator
             // var_dump($token);
 
             if ( is_array( $token ) ) {
+                switch ( $token[0] ) {
+                case T_CURLY_OPEN: 
+                case T_DOLLAR_OPEN_CURLY_BRACES: 
+                    ++$depth; 
+                    break;
+                } 
                 return true;
             }
 

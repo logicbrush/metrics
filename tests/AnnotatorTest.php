@@ -18,6 +18,9 @@ class AnnotatorTest extends TestCase {
     }
 
 
+    /**
+     * @covers AnnotatorImpl::run
+     */
     public function test_annotating_a_method() {
 
         $this->path_to_clover = $this->createCloverFile( 'testClass', ['testMethod'] );
@@ -33,6 +36,9 @@ class AnnotatorTest extends TestCase {
     }
 
 
+    /**
+     * @covers AnnotatorImpl::run
+     */
     public function test_a_method_without_docblock_will_not_be_annotated() {
         $this->path_to_clover = $this->createCloverFile( 'testClass', ['testMethod'] );
         $this->path_to_file = $this->createSourceFile( false );

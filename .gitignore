@@ -1,12 +1,8 @@
-# Composer
-composer.lock
-/vendor/
-
-# Build
-/build/
-
-phpunit.xml
-.phpunit.result.cache
 .php_cs.cache
-
-# Gitub
+.phpunit.result.cache
+*-cache
+*.cache
+*~
+/vendor/
+composer.lock
+phpunit.xml

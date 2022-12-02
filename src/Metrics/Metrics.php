@@ -7,14 +7,17 @@ use Doctrine\Common\Annotations\Annotation\Target;
 use Doctrine\Common\Annotations\Annotation\Required;
 
 /**
+ *
  * @Annotation
  * @Target("METHOD")
  */
+
+
 class Metrics {
 
-    /** @Required */
-    public float $crap;
+	/** @Required */
+	public float $crap;
 
-    public bool $uncovered = false;
+	public bool $uncovered = false;
 
 }

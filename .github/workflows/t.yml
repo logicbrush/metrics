@@ -19,7 +19,7 @@ on:
 
 jobs:
 
-  annotate:
+  tidy:
     name: "Annotate with Metrics"
     runs-on: 'ubuntu-latest'
     steps:
@@ -36,6 +36,9 @@ jobs:
           XDEBUG_MODE: coverage
       - run: |
           find src -name "*.php" -exec ./bin/metrics annotate ./coverage.xml {} \;
+      - run: |
+          find src -name "*.php" -exec ./vendor/bin/phptidy.php replace {} \;
+      - run: |
           git config user.name github-actions
           git config user.email github-actions@github.com
           git add src

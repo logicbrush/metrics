@@ -1,4 +1,4 @@
-name: "Tidy"
+name: "Annotate & Tidy"
 
 on: 
   workflow_run:
@@ -18,12 +18,9 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: php-actions/composer@v6
-        with:
-          php_version: ${{ matrix.php-version }}
       - name: PHPUnit Tests
         uses: php-actions/phpunit@master
         with:
-          php_version: latest
           bootstrap: vendor/autoload.php
           configuration: phpunit.xml.dist
           args: --coverage-clover build/clover.xml

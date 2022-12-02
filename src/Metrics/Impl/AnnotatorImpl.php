@@ -19,8 +19,6 @@ defined( 'T_NAME_QUALIFIED' ) or define( 'T_NAME_QUALIFIED', -1 );
  *
  * @package default
  */
-
-
 class AnnotatorImpl implements Annotator
 {
 	private $path_to_clover, $path_to_file;

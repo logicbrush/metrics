@@ -1,4 +1,4 @@
-name: Annotate & Tidy
+name: "Annotate & Tidy"
 
 on: 
   workflow_run:

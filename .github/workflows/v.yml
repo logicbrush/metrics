@@ -1,4 +1,4 @@
-name: Github Autorelease
+name: "Github Autorelease"
 
 on: 
   workflow_run:

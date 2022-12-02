@@ -34,7 +34,7 @@ jobs:
         env:
           XDEBUG_MODE: coverage
       - run: |
-          find src -name "*.php" -exec ./vendor/bin/metrics annotate ./build/clover.xml {} \;
+          find src -name "*.php" -exec ./bin/metrics annotate ./build/clover.xml {} \;
           git config user.name github-actions
           git config user.email github-actions@github.com
           git add src

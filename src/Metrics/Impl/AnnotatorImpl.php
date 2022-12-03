@@ -123,7 +123,7 @@ class AnnotatorImpl implements Annotator
 
 	/**
 	 *
-	 * @Metrics( crap = 17.82 )
+	 * @Metrics( crap = 26.62 )
 	 * @param array   $tokens (reference)
 	 * @return unknown
 	 */
@@ -172,7 +172,7 @@ class AnnotatorImpl implements Annotator
 
 	/**
 	 *
-	 * @Metrics( crap = 5.58 )
+	 * @Metrics( crap = 5 )
 	 * @param string  $function
 	 * @param string  $class
 	 * @param string  $namespace

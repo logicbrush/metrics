@@ -7,7 +7,7 @@ class AnnotatorTest extends TestCase {
 
     private string $coverage_file, $source_file;
 
-    
+
     public function tearDown() : void {
         @unlink( $this->coverage_file );
         @unlink( $this->source_file );
@@ -15,7 +15,7 @@ class AnnotatorTest extends TestCase {
     }
 
 
-    public function test_annotating_a_method_in_an_unnamespaced_class() {
+    public function test_annotating_a_public_method() {
 
         $this->source_file = $this->withSource( <<<EOF
             <?php
@@ -40,6 +40,81 @@ EOF
         );
     }
 
+    public function test_annotating_a_protected_method() {
+
+        $this->source_file = $this->withSource( <<<EOF
+            <?php
+            class TestClass {
+                /**
+                 * method 'testMethod'
+                 */    
+                protected function testMethod() {
+                    return true;
+                }
+            };
+EOF
+        );
+        $this->coverage_file = $this->withCoverage( 'TestClass', ['testMethod'] );
+
+        $annotator = new AnnotatorImpl( $this->coverage_file, $this->source_file );
+        $annotator->run();
+
+        $this->assertStringContainsString(
+            '@Metrics( crap = 2, uncovered = true )',
+            file_get_contents( $this->source_file )
+        );
+    }
+    
+    public function test_annotating_a_static_method() {
+
+        $this->source_file = $this->withSource( <<<EOF
+            <?php
+            class TestClass {
+                /**
+                 * method 'testMethod'
+                 */    
+                static function testMethod() {
+                    return true;
+                }
+            };
+EOF
+        );
+        $this->coverage_file = $this->withCoverage( 'TestClass', ['testMethod'] );
+
+        $annotator = new AnnotatorImpl( $this->coverage_file, $this->source_file );
+        $annotator->run();
+
+        $this->assertStringContainsString(
+            '@Metrics( crap = 2, uncovered = true )',
+            file_get_contents( $this->source_file )
+        );
+    }
+    
+    public function test_annotating_a_private_method() {
+
+        $this->source_file = $this->withSource( <<<EOF
+            <?php
+            class TestClass {
+                /**
+                 * method 'testMethod'
+                 */    
+                private function testMethod() {
+                    return true;
+                }
+            };
+EOF
+        );
+        $this->coverage_file = $this->withCoverage( 'TestClass', ['testMethod'] );
+
+        $annotator = new AnnotatorImpl( $this->coverage_file, $this->source_file );
+        $annotator->run();
+
+        $this->assertStringContainsString(
+            '@Metrics( crap = 2, uncovered = true )',
+            file_get_contents( $this->source_file )
+        );
+    }
+   
     public function test_annotating_a_method_in_a_namespaced_class() {
 
         $this->source_file = $this->withSource( <<<EOF
@@ -67,7 +142,7 @@ EOF
     }
 
 
-    public function test_a_method_without_docblock_will_not_be_annotated() {
+    public function test_not_annotating_a_method_without_a_docblock() {
 
         $this->source_file = $this->withSource( <<<EOF
             <?php

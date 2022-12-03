@@ -4,50 +4,93 @@ use Logicbrush\Metrics\Impl\AnnotatorImpl;
 use PHPUnit\Framework\TestCase;
 
 class AnnotatorTest extends TestCase {
-    private $path_to_clover, $path_to_file;
 
-    public function setUp() : void {
-        parent::setUp();
-    }
+    private string $coverage_file, $source_file;
 
-
+    
     public function tearDown() : void {
-        unlink( $this->path_to_clover );
-        unlink( $this->path_to_file );
+        @unlink( $this->coverage_file );
+        @unlink( $this->source_file );
         parent::tearDown();
     }
 
 
-    public function test_annotating_a_method() {
+    public function test_annotating_a_method_in_an_unnamespaced_class() {
 
-        $this->path_to_clover = $this->createCloverFile( 'testClass', ['testMethod'] );
-        $this->path_to_file = $this->createSourceFile( true );
+        $this->source_file = $this->withSource( <<<EOF
+            <?php
+            class TestClass {
+                /**
+                 * method 'testMethod'
+                 */    
+                public function testMethod() {
+                    return true;
+                }
+            };
+EOF
+        );
+        $this->coverage_file = $this->withCoverage( 'TestClass', ['testMethod'] );
 
-        $annotator = new AnnotatorImpl( $this->path_to_clover, $this->path_to_file );
+        $annotator = new AnnotatorImpl( $this->coverage_file, $this->source_file );
         $annotator->run();
 
         $this->assertStringContainsString(
             '@Metrics( crap = 2, uncovered = true )',
-            file_get_contents( $this->path_to_file )
+            file_get_contents( $this->source_file )
+        );
+    }
+
+    public function test_annotating_a_method_in_a_namespaced_class() {
+
+        $this->source_file = $this->withSource( <<<EOF
+            <?php
+            namespace Tests;            
+            class TestClass {
+                /**
+                 * method 'testMethod'
+                 */    
+                public function testMethod() {
+                    return true;
+                }
+            };
+EOF
+        );
+        $this->coverage_file = $this->withCoverage( 'TestClass', ['testMethod'], 'Tests' );
+
+        $annotator = new AnnotatorImpl( $this->coverage_file, $this->source_file );
+        $annotator->run();
+
+        $this->assertStringContainsString(
+            '@Metrics( crap = 2, uncovered = true )',
+            file_get_contents( $this->source_file )
         );
     }
 
 
     public function test_a_method_without_docblock_will_not_be_annotated() {
-        $this->path_to_clover = $this->createCloverFile( 'testClass', ['testMethod'] );
-        $this->path_to_file = $this->createSourceFile( false );
 
-        $annotator = new AnnotatorImpl( $this->path_to_clover, $this->path_to_file );
+        $this->source_file = $this->withSource( <<<EOF
+            <?php
+            class TestClass {
+                public function testMethod() {
+                    return true;
+                }
+            };
+EOF
+        );
+        $this->coverage_file = $this->withCoverage( 'TestClass', ['testMethod'], 'Tests' );
+
+        $annotator = new AnnotatorImpl( $this->coverage_file, $this->source_file );
         $annotator->run();
 
         $this->assertStringNotContainsString(
             '@Metrics( crap = 2, uncovered = true )',
-            file_get_contents( $this->path_to_file )
+            file_get_contents( $this->source_file )
         );
     }
 
 
-    protected function createCloverFile( $class, $methods = [] ) {
+    protected function withCoverage( string $className, array $methods = [], string $namespace = null ) {
         $lines = '';
 
         foreach ( $methods as $method ) {
@@ -60,7 +103,7 @@ class AnnotatorTest extends TestCase {
   <project timestamp="1666990245">
     <package name="">
       <file name="">
-        <class name="Tests\\'.$class.'" namespace="Tests">
+        <class name="'.($namespace ? $namespace ."\\" : '').$className.'" namespace="'.($namespace ?: 'global').'">
           <metrics complexity="5" methods="'.count($methods).'" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="0" coveredstatements="0" elements="'.count($methods).'" coveredelements="0"/>
         </class>
         '.$lines.'
@@ -81,30 +124,7 @@ class AnnotatorTest extends TestCase {
     }
 
 
-    protected function createSourceFile( $docBlock = true ) {
-        $content =
-'<?php
-/**
- * @package default
- */
-
-namespace Tests;
-
-class testClass {';
-
-    if ( $docBlock ) {
-        $content .=
-'
-    /**
-     *
-     */';
-    }
-
-    $content .=
-    'public function testMethod() {
-        return true;
-    }
-}';
+    protected function withSource( string $content ) {       
 
         $file = tempnam( __DIR__, 'source_' );
         $handle = fopen($file, "w");
@@ -112,6 +132,7 @@ class testClass {';
         fclose($handle);
 
         return $file;
+
     }
     
 

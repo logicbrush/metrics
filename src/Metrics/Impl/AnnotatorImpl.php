@@ -207,7 +207,7 @@ class AnnotatorImpl implements Annotator
 	 * @param array   $array (reference)
 	 * @param unknown $token (reference)
 	 * @param int     $depth (reference)
-	 * @param int     $key   (optional, reference)
+	 * @param int     $key   (optional) (optional, reference)
 	 * @return unknown
 	 */
 	protected function pop_token( array &$array,  &$token, int &$depth, int &$key = null ) : bool {

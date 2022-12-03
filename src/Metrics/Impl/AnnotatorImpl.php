@@ -28,6 +28,8 @@ class AnnotatorImpl implements Annotator
 	/**
 	 *
 	 * @Metrics( crap = 1 )
+	 * @param string  $clover
+	 * @param string  $file
 	 */
 	public function __construct( string $clover, string $file ) {
 		$this->path_to_clover = $clover;
@@ -124,7 +126,9 @@ class AnnotatorImpl implements Annotator
 	/**
 	 *
 	 * @Metrics( crap = 19.15 )
-	 * @param array   $tokens (reference)
+	 * @param array            $tokens  (reference)
+	 * @param int              $key
+	 * @param SimpleXMLElement $metrics
 	 * @return unknown
 	 */
 	protected function annotate( array &$tokens, int $key, SimpleXMLElement $metrics ) {
@@ -173,9 +177,10 @@ class AnnotatorImpl implements Annotator
 	/**
 	 *
 	 * @Metrics( crap = 5 )
-	 * @param string  $function
-	 * @param string  $class
-	 * @param string  $namespace
+	 * @param SimpleXMLElement $clover
+	 * @param string           $function
+	 * @param string           $class
+	 * @param string           $namespace
 	 * @return unknown
 	 */
 	protected function metrics( SimpleXMLElement $clover, ?string $function, ?string $class, ?string $namespace ): ?SimpleXMLElement {

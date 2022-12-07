@@ -28,6 +28,8 @@ class AnnotatorImpl implements Annotator
 	/**
 	 *
 	 * @Metrics( crap = 1 )
+	 * @param string  $clover
+	 * @param string  $file
 	 */
 	public function __construct( string $clover, string $file ) {
 		$this->path_to_clover = $clover;
@@ -123,8 +125,10 @@ class AnnotatorImpl implements Annotator
 
 	/**
 	 *
-	 * @Metrics( crap = 17.82 )
-	 * @param array   $tokens (reference)
+	 * @Metrics( crap = 19.15 )
+	 * @param array            $tokens  (reference)
+	 * @param int              $key
+	 * @param SimpleXMLElement $metrics
 	 * @return unknown
 	 */
 	protected function annotate( array &$tokens, int $key, SimpleXMLElement $metrics ) {
@@ -172,10 +176,11 @@ class AnnotatorImpl implements Annotator
 
 	/**
 	 *
-	 * @Metrics( crap = 5.58 )
-	 * @param string  $function
-	 * @param string  $class
-	 * @param string  $namespace
+	 * @Metrics( crap = 5 )
+	 * @param SimpleXMLElement $clover
+	 * @param string           $function
+	 * @param string           $class
+	 * @param string           $namespace
 	 * @return unknown
 	 */
 	protected function metrics( SimpleXMLElement $clover, ?string $function, ?string $class, ?string $namespace ): ?SimpleXMLElement {
@@ -202,7 +207,7 @@ class AnnotatorImpl implements Annotator
 	 * @param array   $array (reference)
 	 * @param unknown $token (reference)
 	 * @param int     $depth (reference)
-	 * @param int     $key   (optional, reference)
+	 * @param int     $key   (optional) (optional, reference)
 	 * @return unknown
 	 */
 	protected function pop_token( array &$array,  &$token, int &$depth, int &$key = null ) : bool {

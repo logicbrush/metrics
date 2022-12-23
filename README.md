@@ -1,7 +1,6 @@
 # Metrics
 
-A package of utilities for dealing with coverage metrics in PHP, and annotating
-your source files therefrom.
+A package of utilities for making use of coverage metrics in PHP.
 
 ## Installation
 

@@ -1,10 +1,7 @@
 name: "Github Autorelease"
 
 on: 
-  workflow_run:
-    workflows: ["Continuous Integration"]
-    types:
-      - completed
+  push:
     tags:
       - "v*"
 

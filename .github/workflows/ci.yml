@@ -18,6 +18,8 @@ jobs:
             php-version: '8.0'
           - operating-system: 'ubuntu-latest'
             php-version: '7.4'
+          - operating-system: 'ubuntu-latest'
+            php-version: '7.2'
   
     name: PHP ${{ matrix.php-version }}
     runs-on: ${{ matrix.operating-system }}
@@ -26,10 +28,6 @@ jobs:
       - uses: php-actions/composer@v6
         with:
           php_version: ${{ matrix.php-version }}
-      - name: PHPUnit Tests
-        uses: php-actions/phpunit@master
-        with:
-          php_version: ${{ matrix.php-version }}
-          bootstrap: vendor/autoload.php
-          configuration: phpunit.xml.dist
-          args: --coverage-text
+      - run: |
+          ./vendor/bin/phpunit -c phpunit.xml.dist \
+          --coverage-clover ./coverage.xml

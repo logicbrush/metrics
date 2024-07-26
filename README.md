@@ -1,6 +1,9 @@
 # Metrics
 
-A package of utilities for making use of coverage metrics in PHP.
+A command line utility for making better use of coverage metrics in PHP.
+Chiefly, allows you to update your source code with docblock annotations that
+present method coverage/complexity. Use with your CI process to keep your
+metrics in front of you as you develop.
 
 ## Installation
 
@@ -8,14 +11,7 @@ A package of utilities for making use of coverage metrics in PHP.
 composer require logicbrush/metrics
 ```
 
-## Command Line Functions
-
-A number of metrics-related functions are accessible via the command line.
-
-### Annotate
-
-Use to annotate source code with metric information from a `coverage.xml` file.
-Use with your CI process to keep your metrics in front of you as you develop.
+## Usage
 
 ```shell
 php ./vendor/bin/metrics annotate «path to coverage.xml» «path to source file»

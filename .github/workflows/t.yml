@@ -27,6 +27,8 @@ jobs:
       - run: |
           find src -name "*.php" -exec ./bin/metrics annotate ./coverage.xml {} \;
       - run: |
+          ./vendor/bin/rector process src
+      - run: |
           find tests -name "*.php" -exec ./vendor/bin/phptidy.php replace {} \;
           find src -name "*.php" -exec ./vendor/bin/phptidy.php replace {} \;
       - run: |

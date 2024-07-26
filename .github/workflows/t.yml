@@ -1,15 +1,11 @@
 name: "Annotate & Tidy"
 
 on: 
-  workflow_run:
-    workflows: 
-      - "Continuous Integration"
+  push:
     branches:
       - "hotfix/**"
       - "release/**"
       - "feature/**"
-    types:
-      - completed
 
 jobs:
 

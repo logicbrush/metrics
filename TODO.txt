@@ -1,0 +1,7 @@
+# A list of things to do, in taskpaper format...
+
+Version 0.4.0:
+    - PHP 8.2 support.
+    - Update documenation.
+
+Archive:

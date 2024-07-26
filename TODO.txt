@@ -1,7 +1,7 @@
 # A list of things to do, in taskpaper format...
 
 Version 0.4.0:
-    - PHP 8.2 support.
+    - PHP 8.2 support. @done(24-07-26 07:56)
     - Update documenation.
     - Rector support.
 

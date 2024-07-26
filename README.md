@@ -1,9 +1,9 @@
 # Metrics
 
-A command line utility for making use of coverage metrics in PHP.  Chiefly,
-allows you to update your source code with docblock annotations that present
-method coverage/complexity. Use with your CI process to keep your metrics in
-front of you as you develop.
+A command line utility for making better use of coverage metrics in PHP.
+Chiefly, allows you to update your source code with docblock annotations that
+present method coverage/complexity. Use with your CI process to keep your
+metrics in front of you as you develop.
 
 ## Installation
 

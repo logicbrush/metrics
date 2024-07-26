@@ -17,15 +17,12 @@ use Logicbrush\Metrics\Impl\AnnotatorImpl;
 class Bootstrap {
 
 	/**
-	 *
-	 * @Metrics( crap = 2, uncovered = true )
-	 * @param string  $clover
-	 * @param string  $file
-	 * @return unknown
-	 */
-	public static function createAnnotator( string $clover, string $file ) {
-		$annotator = new AnnotatorImpl( $clover, $file );
-		return $annotator;
+  *
+  * @Metrics( crap = 2, uncovered = true )
+  * @return unknown
+  */
+ public static function createAnnotator( string $clover, string $file ) {
+		return new AnnotatorImpl( $clover, $file );
 	}
 
 

@@ -16,7 +16,8 @@
     },
     "require-dev": {
         "phpunit/phpunit": "^8.0||^9.5",
-        "cmrcx/phptidy": "^3.3"
+        "cmrcx/phptidy": "^3.3",
+        "rector/rector": "^1.2"
     },
     "prefer-stable": true,
     "autoload": {

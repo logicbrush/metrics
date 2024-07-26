@@ -6,7 +6,7 @@ use Logicbrush\Metrics\Annotator;
 use SimpleXMLElement;
 
 // These constants are only defined in PHP 8.0+.
-defined( 'T_NAME_QUALIFIED' ) or define( 'T_NAME_QUALIFIED', -1 );
+defined( 'T_NAME_QUALIFIED' ) || define( 'T_NAME_QUALIFIED', -1 );
 
 /**
  * Metrics implementation of the Annotator interfce
@@ -28,8 +28,6 @@ class AnnotatorImpl implements Annotator
 	/**
 	 *
 	 * @Metrics( crap = 1 )
-	 * @param string  $clover
-	 * @param string  $file
 	 */
 	public function __construct( string $clover, string $file ) {
 		$this->path_to_clover = $clover;
@@ -42,7 +40,7 @@ class AnnotatorImpl implements Annotator
 	 * @Metrics( crap = 26.12 )
 	 */
 	public function run() {
-		defined( 'STDIN' ) or die( 'command line only.' );
+		defined( 'STDIN' ) || die( 'command line only.' );
 
 
 		$file = $this->path_to_file;
@@ -108,7 +106,7 @@ class AnnotatorImpl implements Annotator
 						case T_WHITESPACE:
 							break;
 						default:
-							if ( ( $metrics = $this->metrics( $clover, $function, $class, $namespace ) ) !== null ) {
+							if ( ( $metrics = $this->metrics( $clover, $function, $class, $namespace ) ) instanceof SimpleXMLElement ) {
 								$this->annotate( $tokens, $key, $metrics );
 							}
 							goto handle_token;
@@ -126,9 +124,7 @@ class AnnotatorImpl implements Annotator
 	/**
 	 *
 	 * @Metrics( crap = 19.15 )
-	 * @param array            $tokens  (reference)
-	 * @param int              $key
-	 * @param SimpleXMLElement $metrics
+	 * @param array   $tokens (reference)
 	 * @return unknown
 	 */
 	protected function annotate( array &$tokens, int $key, SimpleXMLElement $metrics ) {
@@ -177,10 +173,9 @@ class AnnotatorImpl implements Annotator
 	/**
 	 *
 	 * @Metrics( crap = 5 )
-	 * @param SimpleXMLElement $clover
-	 * @param string           $function
-	 * @param string           $class
-	 * @param string           $namespace
+	 * @param string  $function
+	 * @param string  $class
+	 * @param string  $namespace
 	 * @return unknown
 	 */
 	protected function metrics( SimpleXMLElement $clover, ?string $function, ?string $class, ?string $namespace ): ?SimpleXMLElement {

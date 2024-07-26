@@ -1,8 +1,9 @@
 # Metrics
 
 A command line utility for making use of coverage metrics in PHP.  Chiefly,
-allows you to update your source code with docblock annotations that show method
-coverage/complexity.
+allows you to update your source code with docblock annotations that present
+method coverage/complexity. Use with your CI process to keep your metrics in
+front of you as you develop.
 
 ## Installation
 
@@ -11,11 +12,6 @@ composer require logicbrush/metrics
 ```
 
 ## Usage
-
-Use to annotate source code with metric information from a `coverage.xml` file,
-like the ones you can generate with
-[PHPUnit](https://docs.phpunit.de/en/10.5/code-coverage.html). Use with your CI
-process to keep your metrics in front of you as you develop.
 
 ```shell
 php ./vendor/bin/metrics annotate «path to coverage.xml» «path to source file»

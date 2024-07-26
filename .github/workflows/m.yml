@@ -19,6 +19,7 @@ jobs:
           false || ( \
             git config user.name github-actions && \
             git config user.email github-actions@github.com && \
+            git fetch origin develop && \
             git checkout develop && \
             git merge ${{ github.sha }}
             git add . && \

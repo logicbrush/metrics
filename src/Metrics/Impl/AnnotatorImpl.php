@@ -124,8 +124,8 @@ class AnnotatorImpl implements Annotator
 	/**
 	 *
 	 * @Metrics( crap = 19.15 )
+	 *
 	 * @param array   $tokens (reference)
-	 * 
 	 */
 	protected function annotate( array &$tokens, int $key, SimpleXMLElement $metrics ) {
 		while ( $key >= 1 && ( $token = $tokens[--$key] ) ) {
@@ -173,10 +173,10 @@ class AnnotatorImpl implements Annotator
 	/**
 	 *
 	 * @Metrics( crap = 5 )
+	 *
 	 * @param string  $function
 	 * @param string  $class
 	 * @param string  $namespace
-	 * 
 	 */
 	protected function metrics( SimpleXMLElement $clover, ?string $function, ?string $class, ?string $namespace ): ?SimpleXMLElement {
 
@@ -199,11 +199,11 @@ class AnnotatorImpl implements Annotator
 	/**
 	 *
 	 * @Metrics( crap = 7.10 )
+	 *
 	 * @param array   $array (reference)
 	 * @param unknown $token (reference)
 	 * @param int     $depth (reference)
 	 * @param int     $key   (optional) (optional, reference)
-	 * 
 	 */
 	protected function pop_token( array &$array,  &$token, int &$depth, int &$key = null ) : bool {
 

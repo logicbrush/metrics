@@ -21,7 +21,7 @@ jobs:
             git config user.email github-actions@github.com && \
             git fetch origin develop && \
             git checkout develop && \
-            git merge ${{ github.sha }} && \
+            git merge ${{ github.ref.name }} && \
             git add . && \
             git commit -m "merge" && \
             git push \

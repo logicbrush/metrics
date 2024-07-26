@@ -1,11 +1,14 @@
 name: "Merge Changes"
 
 on: 
-  push:
+  workflow_run:
+    workflows: ["Continuous Integration"]
     branches:
       - "hotfix/*"
       - "release/*"
       - "master"
+    types:
+      - completed
 
 jobs:
 

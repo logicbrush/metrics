@@ -15,8 +15,10 @@ A number of metrics-related functions are accessible via the command line.
 
 ### Annotate
 
-Use to annotate source code with metric information from a `coverage.xml` file.
-Use with your CI process to keep your metrics in front of you as you develop.
+Use to annotate source code with metric information from a `coverage.xml` file,
+like the ones you can generate with
+[PHPUnit](https://docs.phpunit.de/en/10.5/code-coverage.html). Use with your CI
+process to keep your metrics in front of you as you develop.
 
 ```shell
 php ./vendor/bin/metrics annotate «path to coverage.xml» «path to source file»

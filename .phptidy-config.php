@@ -1,5 +1,6 @@
 <?php
 
+$default_package = 'metrics';
 $add_operator_space = true;
 $fix_round_bracket_space = true;
 $add_file_docblock = false;

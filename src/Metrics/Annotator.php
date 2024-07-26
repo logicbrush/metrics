@@ -5,7 +5,7 @@ namespace Logicbrush\Metrics;
 /**
  * Annotator interface
  *
- * @package default
+ * @package metrics
  */
 
 

@@ -1,4 +1,4 @@
-name: "Merge"
+name: "Merge Changes"
 
 on: 
   push:
@@ -11,7 +11,7 @@ jobs:
 
   merge:
 
-    name: "Merge changes"
+    name: "Merge Changes"
     runs-on: 'ubuntu-latest'
     steps:
       - uses: actions/checkout@v3

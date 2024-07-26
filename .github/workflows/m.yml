@@ -2,10 +2,11 @@ name: "Merge Changes"
 
 on: 
   workflow_run:
-    workflows: ["Continuous Integration"]
+    workflows: 
+      - "Continuous Integration"
     branches:
-      - "hotfix/*"
-      - "release/*"
+      - "hotfix/**"
+      - "release/**"
       - "master"
     types:
       - completed

@@ -23,6 +23,6 @@ jobs:
             git checkout develop && \
             git merge ${{ github.ref_name }} && \
             git add . && \
-            git commit -m "merge" && \
+            git commit -m "merge" --allow-empty && \
             git push \
           )

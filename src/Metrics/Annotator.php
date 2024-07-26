@@ -14,8 +14,11 @@ interface Annotator
 
 
 
-	
- public function __construct(  string $clover, string $file );
+
+	/**
+	 *
+	 */
+	public function __construct(  string $clover, string $file );
 
 	/**
 	 *

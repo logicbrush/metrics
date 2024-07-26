@@ -14,6 +14,7 @@ if ( ! class_exists( Bootstrap::class ) ) {
 	require_once __DIR__ . '/Metrics/Bootstrap.php';
 }
 
+
 try {
 	// if (version_compare(PHP_VERSION, '8.0.0', '<')) {
 	//     throw new \ErrorException('PHP Version is lower than 8.0.0. Please upgrade your runtime.');

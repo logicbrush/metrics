@@ -26,10 +26,10 @@ class AnnotatorImpl implements Annotator
 	private $path_to_clover, $path_to_file;
 
 	/**
-  *
-  * @Metrics( crap = 1 )
-  */
- public function __construct( string $clover, string $file ) {
+	 *
+	 * @Metrics( crap = 1 )
+	 */
+	public function __construct( string $clover, string $file ) {
 		$this->path_to_clover = $clover;
 		$this->path_to_file = $file;
 	}
@@ -106,7 +106,7 @@ class AnnotatorImpl implements Annotator
 						case T_WHITESPACE:
 							break;
 						default:
-							if ( ($metrics = $this->metrics( $clover, $function, $class, $namespace )) instanceof SimpleXMLElement ) {
+							if ( ( $metrics = $this->metrics( $clover, $function, $class, $namespace ) ) instanceof SimpleXMLElement ) {
 								$this->annotate( $tokens, $key, $metrics );
 							}
 							goto handle_token;
@@ -122,12 +122,12 @@ class AnnotatorImpl implements Annotator
 
 
 	/**
-  *
-  * @Metrics( crap = 19.15 )
-  * @param array            $tokens  (reference)
-  * @return unknown
-  */
- protected function annotate( array &$tokens, int $key, SimpleXMLElement $metrics ) {
+	 *
+	 * @Metrics( crap = 19.15 )
+	 * @param array   $tokens (reference)
+	 * @return unknown
+	 */
+	protected function annotate( array &$tokens, int $key, SimpleXMLElement $metrics ) {
 		while ( $key >= 1 && ( $token = $tokens[--$key] ) ) {
 			if ( is_array( $token ) ) {
 				switch ( $token[0] ) {
@@ -171,14 +171,14 @@ class AnnotatorImpl implements Annotator
 
 
 	/**
-  *
-  * @Metrics( crap = 5 )
-  * @param string           $function
-  * @param string           $class
-  * @param string           $namespace
-  * @return unknown
-  */
- protected function metrics( SimpleXMLElement $clover, ?string $function, ?string $class, ?string $namespace ): ?SimpleXMLElement {
+	 *
+	 * @Metrics( crap = 5 )
+	 * @param string  $function
+	 * @param string  $class
+	 * @param string  $namespace
+	 * @return unknown
+	 */
+	protected function metrics( SimpleXMLElement $clover, ?string $function, ?string $class, ?string $namespace ): ?SimpleXMLElement {
 
 		if ( $function && $class ) {
 			if ( $namespace ) {

@@ -1,0 +1,27 @@
+name: "Merge"
+
+on: 
+  push:
+    branches:
+      - "hotfix/*"
+      - "release/*"
+      - "master"
+
+jobs:
+
+  merge:
+
+    name: "Merge changes"
+    runs-on: 'ubuntu-latest'
+    steps:
+      - uses: actions/checkout@v3
+      - run: |
+          false || ( \
+            git config user.name github-actions && \
+            git config user.email github-actions@github.com && \
+            git checkout develop && \
+            git merge ${{ github.sha }}
+            git add . && \
+            git commit -m "merge" && \
+            git push \
+          )

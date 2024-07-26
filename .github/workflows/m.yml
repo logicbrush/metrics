@@ -24,6 +24,6 @@ jobs:
             git config user.email github-actions@github.com && \
             git fetch --unshallow origin ${{ github.ref_name }} develop && \
             git checkout develop && \
-            git merge ${{ github.ref_name }} && \
+            git merge origin/${{ github.ref_name }} && \
             git push \
           )

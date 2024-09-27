@@ -34,7 +34,7 @@ class AnnotatorImpl implements Annotator
 
 	/**
 	 * Updates the annotations in the given source file from the coverage file.
-	 * 
+	 *
 	 * @Metrics( crap = 26.12 )
 	 */
 	public function run() {

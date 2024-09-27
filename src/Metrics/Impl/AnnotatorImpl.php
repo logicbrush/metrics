@@ -9,13 +9,10 @@ use SimpleXMLElement;
 defined( 'T_NAME_QUALIFIED' ) || define( 'T_NAME_QUALIFIED', -1 );
 
 /**
- * Metrics implementation of the Annotator interfce
+ * Metrics implementation of the Annotator interface.
  *
  * This class will examine the clover metrics for the project and will update
  * the method Docblocks in the provided source file with `@Metrics` annotations.
- *
- * @noRector
- *
  *
  * @package metrics
  */
@@ -23,32 +20,33 @@ defined( 'T_NAME_QUALIFIED' ) || define( 'T_NAME_QUALIFIED', -1 );
 
 class AnnotatorImpl implements Annotator
 {
-	private $path_to_clover, $path_to_file;
+	private $path_to_coverage_file, $path_to_source_file;
 
 	/**
 	 *
 	 * @Metrics( crap = 1 )
 	 */
-	public function __construct( string $clover, string $file ) {
-		$this->path_to_clover = $clover;
-		$this->path_to_file = $file;
+	public function __construct( string $path_to_coverage_file, string $path_to_source_file ) {
+		$this->path_to_coverage_file = $path_to_coverage_file;
+		$this->path_to_source_file = $path_to_source_file;
 	}
 
 
 	/**
-	 *
+	 * Updates the annotations in the given source file from the coverage file.
+	 * 
 	 * @Metrics( crap = 26.12 )
 	 */
 	public function run() {
+
 		defined( 'STDIN' ) || die( 'command line only.' );
 
-
-		$file = $this->path_to_file;
+		$file = $this->path_to_source_file;
 		$code = file_get_contents( $file );
 		$tokens = token_get_all( $code, TOKEN_PARSE );
 		$token = [];
 
-		$clover = new SimpleXMLElement( file_get_contents( $this->path_to_clover ) );
+		$path_to_coverage_file = new SimpleXMLElement( file_get_contents( $this->path_to_coverage_file ) );
 
 		$function = null;
 		$class = null;
@@ -106,7 +104,7 @@ class AnnotatorImpl implements Annotator
 						case T_WHITESPACE:
 							break;
 						default:
-							if ( ( $metrics = $this->metrics( $clover, $function, $class, $namespace ) ) instanceof SimpleXMLElement ) {
+							if ( ( $metrics = $this->metrics( $path_to_coverage_file, $function, $class, $namespace ) ) instanceof SimpleXMLElement ) {
 								$this->annotate( $tokens, $key, $metrics );
 							}
 							goto handle_token;
@@ -118,6 +116,7 @@ class AnnotatorImpl implements Annotator
 		}
 
 		file_put_contents( $file, array_reduce( $tokens, fn( $output, $token ) => $output . ( is_array( $token ) ? $token[1] : $token ), '' ) );
+
 	}
 
 
@@ -174,7 +173,7 @@ class AnnotatorImpl implements Annotator
 	 * @Metrics( crap = 5 )
 	 *
 	 */
-	protected function metrics( SimpleXMLElement $clover, ?string $function, ?string $class, ?string $namespace ): ?SimpleXMLElement {
+	protected function metrics( SimpleXMLElement $coverage, ?string $function, ?string $class, ?string $namespace ): ?SimpleXMLElement {
 
 		if ( $function && $class ) {
 			if ( $namespace ) {
@@ -183,7 +182,7 @@ class AnnotatorImpl implements Annotator
 				$path = "//class[@name='{$class}'][@namespace='global']/following-sibling::line[@type='method'][@name='{$function}']";
 
 			}
-			if ( $node = @$clover->xpath( $path )[0] ) {
+			if ( $node = @$coverage->xpath( $path )[0] ) {
 				return $node->attributes();
 			}
 		}

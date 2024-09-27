@@ -8,7 +8,7 @@ metrics in front of you as you develop.
 ## Installation
 
 ```shell
-composer require logicbrush/metrics
+composer require --dev logicbrush/metrics
 ```
 
 ## Usage

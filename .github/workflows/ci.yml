@@ -6,7 +6,7 @@ on:
       - "hotfix/**"
       - "release/**"
       - "master"
-  pull_request_target:
+  pull_request:
     branches:
       - "hotfix/**"
       - "release/**"

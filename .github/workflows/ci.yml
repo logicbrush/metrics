@@ -1,14 +1,18 @@
 name: "Continuous Integration"
 
-on: 
+on:   
   push:
-    branches: &branches
+    branches:
       - "hotfix/**"
       - "release/**"
       - "develop"
       - "master"
   pull_request:
-    branches: *branches
+    branches:
+      - "hotfix/**"
+      - "release/**"
+      - "develop"
+      - "master"
 
 jobs:
 

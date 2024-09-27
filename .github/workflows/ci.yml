@@ -6,6 +6,11 @@ on:
       - "hotfix/**"
       - "release/**"
       - "master"
+  pull_request_target:
+    branches:
+      - "hotfix/**"
+      - "release/**"
+      - "develop"
 
 jobs:
 

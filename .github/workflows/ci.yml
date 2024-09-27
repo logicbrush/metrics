@@ -6,6 +6,12 @@ on:
       - "hotfix/**"
       - "release/**"
       - "master"
+  pull_request:
+    branches:
+      - "hotfix/**"
+      - "release/**"
+      - "develop"
+      - "master"
 
 jobs:
 
@@ -67,12 +73,14 @@ jobs:
             git config user.email github-actions@github.com && \
             git add src && \
             git commit -m "tidy" && \
-            git push \
+            git fetch --unshallow origin ${{ github.head_ref || github.ref_name }} && \
+            git push origin HEAD:${{ github.head_ref || github.ref_name }} \
           )
 
   merge:
 
     name: "Merge Changes"
+    if: github.event_name == 'push'
     needs: [test]
     runs-on: 'ubuntu-latest'
     steps:

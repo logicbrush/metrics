@@ -8,9 +8,10 @@ on:
       - "master"
   pull_request:
     branches:
+      - "hotfix/**"
+      - "release/**"
       - "develop"
-      - "feature/**"
-      - "bugfix/**"
+      - "master"
 
 jobs:
 

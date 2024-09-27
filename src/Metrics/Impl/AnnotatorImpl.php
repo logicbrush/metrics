@@ -26,7 +26,7 @@ class AnnotatorImpl implements Annotator
 	 *
 	 * @Metrics( crap = 1 )
 	 */
-	public function __construct( string $path_to_coverage_file, string $path_to_source_file ) {
+	public function __construct(string $path_to_coverage_file, string $path_to_source_file ) {
 		$this->path_to_coverage_file = $path_to_coverage_file;
 		$this->path_to_source_file = $path_to_source_file;
 	}

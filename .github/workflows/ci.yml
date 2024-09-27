@@ -2,16 +2,13 @@ name: "Continuous Integration"
 
 on: 
   push:
-    branches:
-      - "hotfix/**"
-      - "release/**"
-      - "master"
-  pull_request:
-    branches:
+    branches: &branches
       - "hotfix/**"
       - "release/**"
       - "develop"
       - "master"
+  pull_request:
+    branches: *branches
 
 jobs:
 

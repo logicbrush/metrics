@@ -1,6 +1,6 @@
 name: "Continuous Integration"
 
-on:   
+on:
   push:
     branches:
       - "hotfix/**"
@@ -22,23 +22,26 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: php-actions/composer@v6
-      - name: PHPUnit Tests
-        uses: php-actions/phpunit@master
         with:
+          php_version: 8.2
           php_extensions: xdebug
-          bootstrap: vendor/autoload.php
-          configuration: phpunit.xml.dist
-          args: --coverage-clover ./coverage.xml
-        env:
-          XDEBUG_MODE: coverage
-      - run: |
-          find src -name "*.php" -exec ./bin/metrics annotate ./coverage.xml {} \;
-      - run: |
+      - name: Generate Code Coverage
+        run: |
+          XDEBUG_MODE=coverage \
+          ./vendor/bin/phpunit -c phpunit.xml.dist \
+          --coverage-clover ./coverage.xml
+      - name: Annotate with Metrics
+        run: |
+          find src -name "*.php" | xargs -n 1 ./vendor/bin/metrics annotate ./coverage.xml
+      - name: Refactor with Rector
+        run: |
           ./vendor/bin/rector process src
-      - run: |
-          find tests -name "*.php" -exec ./vendor/bin/phptidy.php replace {} \;
-          find src -name "*.php" -exec ./vendor/bin/phptidy.php replace {} \;
-      - run: |
+      - name: Tidy Source Code
+        run: |
+          find tests -name "*.php" | xargs -n 1 ./vendor/bin/phptidy.php replace
+          find src -name "*.php" | xargs -n 1 ./vendor/bin/phptidy.php replace
+      - name: Push Back Changes
+        run: |
           git diff --exit-code src || ( \
             git config user.name github-actions && \
             git config user.email github-actions@github.com && \
@@ -72,11 +75,9 @@ jobs:
         with:
           php_version: ${{ matrix.php-version }}
       - run: |
-          ./vendor/bin/phpunit -c phpunit.xml.dist \
-          --coverage-clover ./coverage.xml
+          ./vendor/bin/phpunit -c phpunit.xml.dist
 
   merge:
-
     name: "Merge Changes"
     if: github.event_name == 'push'
     needs: [latest,matrix]

@@ -32,7 +32,7 @@ jobs:
           --coverage-clover ./coverage.xml
       - name: Annotate with Metrics
         run: |
-          find src -name "*.php" | xargs -n 1 ./vendor/bin/metrics annotate ./coverage.xml
+          find src -name "*.php" | xargs -n 1 ./bin/metrics annotate ./coverage.xml
       - name: Refactor with Rector
         run: |
           ./vendor/bin/rector process src

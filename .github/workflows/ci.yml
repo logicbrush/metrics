@@ -16,38 +16,8 @@ on:
 
 jobs:
 
-  test:
-
-    strategy:
-      fail-fast: false
-      matrix:
-        include:
-          - operating-system: 'ubuntu-latest'
-            php-version: '8.2'
-          - operating-system: 'ubuntu-latest'
-            php-version: '8.1'
-          - operating-system: 'ubuntu-latest'
-            php-version: '8.0'
-          - operating-system: 'ubuntu-latest'
-            php-version: '7.4'
-          - operating-system: 'ubuntu-latest'
-            php-version: '7.2'
-  
-    name: PHP ${{ matrix.php-version }}
-    runs-on: ${{ matrix.operating-system }}
-    steps:
-      - uses: actions/checkout@v3
-      - uses: php-actions/composer@v6
-        with:
-          php_version: ${{ matrix.php-version }}
-      - run: |
-          ./vendor/bin/phpunit -c phpunit.xml.dist \
-          --coverage-clover ./coverage.xml
-
-  tidy:
-
-    name: "Annotate & Tidy"
-    needs: [test]
+  latest:
+    name: "Build & Verify"
     runs-on: 'ubuntu-latest'
     steps:
       - uses: actions/checkout@v3
@@ -78,11 +48,38 @@ jobs:
             git push origin HEAD:${{ github.head_ref || github.ref_name }} \
           )
 
+  matrix:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - operating-system: 'ubuntu-latest'
+            php-version: '8.2'
+          - operating-system: 'ubuntu-latest'
+            php-version: '8.1'
+          - operating-system: 'ubuntu-latest'
+            php-version: '8.0'
+          - operating-system: 'ubuntu-latest'
+            php-version: '7.4'
+          - operating-system: 'ubuntu-latest'
+            php-version: '7.2'
+  
+    name: "Matrix: PHP ${{ matrix.php-version }}"
+    runs-on: ${{ matrix.operating-system }}
+    steps:
+      - uses: actions/checkout@v3
+      - uses: php-actions/composer@v6
+        with:
+          php_version: ${{ matrix.php-version }}
+      - run: |
+          ./vendor/bin/phpunit -c phpunit.xml.dist \
+          --coverage-clover ./coverage.xml
+
   merge:
 
     name: "Merge Changes"
     if: github.event_name == 'push'
-    needs: [test]
+    needs: [latest,matrix]
     runs-on: 'ubuntu-latest'
     steps:
       - uses: actions/checkout@v3

@@ -1,9 +1,10 @@
 # A list of things to do, in taskpaper format...
 
-Version 0.5.0:
-    - Fixes for github actions. @done(24-07-26 12:41)
+Version 1.2.0:
+    - Documentation updates @done(24-09-28 10:25)
 
 Archive:
+    - Fixes for github actions. @done(24-07-26 12:41) @project(Version 0.5.0)
     - Rector support. @done(24-07-26 08:17) @project(Version 0.4.0)
     - PHP 8.2 support. @done(24-07-26 07:56) @project(Version 0.4.0)
     - Update documenation. @done(24-07-26 08:22) @project(Version 0.4.0)

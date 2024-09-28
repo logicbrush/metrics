@@ -122,7 +122,7 @@ class AnnotatorImpl implements Annotator
 
 	/**
 	 *
-	 * @Metrics( crap = 19.15 )
+	 * @Metrics( crap = 17.54 )
 	 *
 	 */
 	protected function annotate( array &$tokens, int $key, SimpleXMLElement $metrics ) {
@@ -193,7 +193,7 @@ class AnnotatorImpl implements Annotator
 
 	/**
 	 *
-	 * @Metrics( crap = 7.10 )
+	 * @Metrics( crap = 7.12 )
 	 *
 	 */
 	protected function pop_token( array &$array,  &$token, int &$depth, int &$key = null ) : bool {

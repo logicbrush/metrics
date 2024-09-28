@@ -8,7 +8,7 @@ use Logicbrush\Metrics\Bootstrap;
  */
 
 
-require_once $GLOBALS['_composer_autoload_path'];
+require_once $GLOBALS['_composer_autoload_path'] ?: __DIR__ . '/../vendor/autoload.php';
 
 if ( ! class_exists( Bootstrap::class ) ) {
 	require_once __DIR__ . '/Metrics/Bootstrap.php';
